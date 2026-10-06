@@ -39,7 +39,6 @@
     }
     .pixel-font { font-family: 'Press Start 2P', monospace; }
 
-    /* SFONDO FLUTTUANTE */
     #petals-bg {
       position: fixed;
       top: 0; left: 0; width: 100%; height: 100%;
@@ -58,7 +57,6 @@
       100% { transform: translateY(105vh) rotate(360deg); opacity: 0.2; }
     }
 
-    /* CONTENITORE CENTRALE */
     .app-wrapper {
       position: relative;
       z-index: 10;
@@ -70,7 +68,6 @@
       padding: 12px 10px 40px;
     }
 
-    /* TASTO AUDIO */
     .audio-btn {
       position: fixed;
       top: 10px;
@@ -86,7 +83,6 @@
       border-radius: 4px;
     }
 
-    /* PANNELLO BASE STILE ARCADE */
     .arcade-card {
       background: var(--panel-bg);
       border: 4px solid var(--pink-border);
@@ -131,15 +127,29 @@
       box-shadow: 1px 1px 0px var(--pink-border);
     }
 
-    /* SEZIONI SCHERMATE */
     .screen { display: none; width: 100%; max-width: 480px; }
     .screen.active { display: block; }
+
+    /* SCHERMATA INTERMEDIA */
+    .inter-box {
+      padding: 14px 8px;
+    }
+    .trophy-anim {
+      font-size: 3.5rem;
+      margin: 10px 0;
+      display: inline-block;
+      animation: pulse 1s infinite alternate;
+    }
+    @keyframes pulse {
+      0% { transform: scale(1); }
+      100% { transform: scale(1.15) rotate(4deg); }
+    }
 
     /* LIVELLO 1: CATCH HEARTS */
     #canvas-container {
       position: relative;
       width: 100%;
-      height: 280px;
+      height: 290px;
       background: #fff;
       border: 3px solid var(--pink-border);
       border-radius: 8px;
@@ -200,7 +210,7 @@
       margin-bottom: 10px;
     }
 
-    /* LIVELLO 3: CRUCIVERBA ANCORATO FISSO */
+    /* LIVELLO 3: CRUCIVERBA ANCORATO */
     .crossword-box {
       width: 100%;
       background: #fff;
@@ -258,7 +268,6 @@
       color: #1b5e20 !important;
     }
 
-    /* BARRA DEFINIZIONE FISSA */
     .clue-banner {
       min-height: 52px;
       background: #fff0f5;
@@ -406,7 +415,6 @@
       z-index: 20;
     }
 
-    /* SCHERMATA FINALE: LETTERA DI CUORE */
     .letter-box {
       background: #fff;
       border: 4px solid var(--pink-border);
@@ -425,7 +433,7 @@
 
   <div id="petals-bg"></div>
 
-  <button id="audio-toggle" class="audio-btn">🎵 BGM: OFF</button>
+  <button id="audio-toggle" class="audio-btn">🎵 THE KOLORS: OFF</button>
 
   <div class="app-wrapper">
 
@@ -443,13 +451,25 @@
       </div>
     </div>
 
-    <!-- LIVELLO 1: CATTURA I CUORI -->
+    <!-- SCHERMATA INTERMEDIA "SEI STATO BRAVISSIMA" -->
+    <div id="screen-intermediate" class="screen">
+      <div class="arcade-card inter-box">
+        <div class="trophy-anim">🏆</div>
+        <h2 class="pixel-font" style="font-size: 13px; color: var(--pink-dark); margin-bottom: 10px;">SEI STATA BRAVISSIMA! 💖</h2>
+        <p id="inter-text" style="font-size: 11px; line-height: 1.5; margin-bottom: 16px; color: #4a154b;">
+          Hai superato la prova! Pronta per il prossimo livello?
+        </p>
+        <button id="btn-inter-next" class="btn-arcade">CONTINUA ▶</button>
+      </div>
+    </div>
+
+    <!-- LIVELLO 1: CATTURA I FIORI E I CUORI -->
     <div id="screen-lvl1" class="screen">
       <div class="arcade-card">
-        <div class="pixel-font level-title">LIVELLO 1: RACCOLTA CUORI</div>
-        <div class="level-sub">Muovi il cestino per raccogliere 7 cuoricini! 🧺</div>
+        <div class="pixel-font level-title">LIVELLO 1: RACCOLTA FIORI E CUORI</div>
+        <div class="level-sub">Raccogli 10 cuoricini e fiori che cadono! 🧺🌸</div>
         <div class="pixel-font" style="font-size: 10px; margin-bottom: 6px; color: var(--pink-dark);">
-          CUORI: <span id="lvl1-score">0</span> / 7
+          PUNTI: <span id="lvl1-score">0</span> / 10
         </div>
         <div id="canvas-container">
           <canvas id="game-canvas"></canvas>
@@ -461,7 +481,7 @@
       </div>
     </div>
 
-    <!-- LIVELLO 2: SIMON SAYS DEI FIORI -->
+    <!-- LIVELLO 2: SIMON SAYS DEI FIORI (5 ROUND) -->
     <div id="screen-lvl2" class="screen">
       <div class="arcade-card">
         <div class="pixel-font level-title">LIVELLO 2: ARMONIA DEI FIORI</div>
@@ -473,7 +493,7 @@
           <div class="simon-btn" data-id="3">🌺</div>
         </div>
         <div class="pixel-font" style="font-size: 10px; color: var(--pink-dark);">
-          ROUND: <span id="simon-round">1</span> / 3
+          ROUND: <span id="simon-round">1</span> / 5
         </div>
       </div>
     </div>
@@ -486,18 +506,15 @@
           CHI È IL MIO GRANDE AMORE?
         </div>
 
-        <!-- DEFINIZIONE FISSA -->
         <div id="cw-clue-display" class="clue-banner">
           Seleziona una riga per leggere la definizione!
         </div>
 
-        <!-- INPUT SCRITTURA RAPIDA -->
         <div class="cw-input-bar">
           <input type="text" id="cw-text-input" class="cw-input-field" placeholder="SCRIVI QUI..." maxlength="10">
           <button id="cw-ok-btn" class="btn-arcade" style="margin-top:0; padding: 6px 12px; font-size: 9px;">OK</button>
         </div>
 
-        <!-- GRIGLIA CRUCIVERBA -->
         <div class="crossword-box" id="cw-grid-container"></div>
 
         <button id="btn-check-cw" class="btn-arcade" style="font-size: 10px;">🔍 VERIFICA CRUCIVERBA</button>
@@ -588,7 +605,9 @@
     }
 
     /* ==========================================
-       2. AUDIO CHIPTUNE: HEY THERE DELILAH
+       2. AUDIO CHIPTUNE: THE KOLORS - ITALODISCO
+       Ritornello: "Questa non è Ibiza, Festivalbar con la cassa dritta...
+       Ti giuro se ti penso la mia testa suona, suona ITALODISCO!"
        ========================================== */
     let audioCtx = null;
     let isBgmPlaying = false;
@@ -619,42 +638,61 @@
       } catch(e) {}
     }
 
-    // Melodia ritornello "Hey There Delilah" (Oh, it's what you do to me...)
     const noteFreqs = {
-      'FS4': 369.99, 'D4': 293.66, 'E4': 329.63, 'B3': 246.94,
-      'A3': 220.00, 'G3': 196.00, 'CS4': 277.18
+      'B3': 246.94, 'D4': 293.66, 'E4': 329.63, 'FS4': 369.99,
+      'G4': 392.00, 'A4': 440.00, 'B4': 493.88, 'CS5': 554.37, 'D5': 587.33
     };
 
-    const chorusMelody = [
-      { note: 'FS4', dur: 0.6, pause: 0.7 },
-      { note: 'D4',  dur: 0.3, pause: 0.35 },
-      { note: 'E4',  dur: 0.3, pause: 0.35 },
-      { note: 'FS4', dur: 0.3, pause: 0.35 },
-      { note: 'E4',  dur: 0.3, pause: 0.35 },
-      { note: 'D4',  dur: 0.3, pause: 0.35 },
-      { note: 'B3',  dur: 0.8, pause: 1.0 },
+    // Sequenza vivace e ritmata di ITALODISCO (The Kolors)
+    const italoDiscoMelody = [
+      // "Questa non è Ibiza..."
+      { note: 'B4', dur: 0.22, pause: 0.26 },
+      { note: 'A4', dur: 0.20, pause: 0.24 },
+      { note: 'FS4', dur: 0.22, pause: 0.26 },
+      { note: 'E4', dur: 0.35, pause: 0.42 },
+      
+      // "Festivalbar con la cassa dritta..."
+      { note: 'FS4', dur: 0.20, pause: 0.22 },
+      { note: 'FS4', dur: 0.20, pause: 0.22 },
+      { note: 'FS4', dur: 0.20, pause: 0.22 },
+      { note: 'FS4', dur: 0.20, pause: 0.22 },
+      { note: 'E4', dur: 0.20, pause: 0.22 },
+      { note: 'D4', dur: 0.35, pause: 0.45 },
 
-      { note: 'FS4', dur: 0.6, pause: 0.7 },
-      { note: 'D4',  dur: 0.3, pause: 0.35 },
-      { note: 'E4',  dur: 0.3, pause: 0.35 },
-      { note: 'FS4', dur: 0.3, pause: 0.35 },
-      { note: 'E4',  dur: 0.3, pause: 0.35 },
-      { note: 'D4',  dur: 0.3, pause: 0.35 },
-      { note: 'B3',  dur: 0.8, pause: 1.0 },
+      // "Ti sto cercando ma è nebbia fitta..."
+      { note: 'FS4', dur: 0.20, pause: 0.22 },
+      { note: 'FS4', dur: 0.20, pause: 0.22 },
+      { note: 'FS4', dur: 0.20, pause: 0.22 },
+      { note: 'FS4', dur: 0.20, pause: 0.22 },
+      { note: 'E4', dur: 0.20, pause: 0.22 },
+      { note: 'D4', dur: 0.35, pause: 0.45 },
 
-      { note: 'FS4', dur: 0.5, pause: 0.6 },
-      { note: 'E4',  dur: 0.4, pause: 0.45 },
-      { note: 'D4',  dur: 0.4, pause: 0.45 },
-      { note: 'CS4', dur: 0.4, pause: 0.45 },
-      { note: 'B3',  dur: 0.8, pause: 1.2 }
+      // "Ti giuro se ti penso la mia testa suona..."
+      { note: 'D4', dur: 0.18, pause: 0.20 },
+      { note: 'E4', dur: 0.18, pause: 0.20 },
+      { note: 'FS4', dur: 0.22, pause: 0.24 },
+      { note: 'FS4', dur: 0.22, pause: 0.24 },
+      { note: 'E4', dur: 0.20, pause: 0.22 },
+      { note: 'D4', dur: 0.20, pause: 0.22 },
+      { note: 'E4', dur: 0.35, pause: 0.42 },
+
+      // "Suona ITALODISCO!"
+      { note: 'FS4', dur: 0.25, pause: 0.28 },
+      { note: 'A4', dur: 0.25, pause: 0.28 },
+      { note: 'B4', dur: 0.50, pause: 0.75 },
+
+      // "Suona ITALODISCO!" (ripresa alta)
+      { note: 'FS4', dur: 0.25, pause: 0.28 },
+      { note: 'A4', dur: 0.25, pause: 0.28 },
+      { note: 'D5', dur: 0.55, pause: 1.00 }
     ];
 
     let noteIdx = 0;
     function scheduleNextNote() {
       if(!isBgmPlaying) return;
-      const step = chorusMelody[noteIdx];
-      playTone(noteFreqs[step.note], 'triangle', step.dur, 0.12);
-      noteIdx = (noteIdx + 1) % chorusMelody.length;
+      const step = italoDiscoMelody[noteIdx];
+      playTone(noteFreqs[step.note], 'square', step.dur, 0.12);
+      noteIdx = (noteIdx + 1) % italoDiscoMelody.length;
       bgmTimeout = setTimeout(scheduleNextNote, step.pause * 1000);
     }
 
@@ -663,19 +701,35 @@
       initAudio();
       if(!isBgmPlaying) {
         isBgmPlaying = true;
-        audioToggleBtn.textContent = '🎵 BGM: ON';
+        audioToggleBtn.textContent = '🎵 THE KOLORS: ON';
         noteIdx = 0;
         scheduleNextNote();
       } else {
         isBgmPlaying = false;
-        audioToggleBtn.textContent = '🎵 BGM: OFF';
+        audioToggleBtn.textContent = '🎵 THE KOLORS: OFF';
         clearTimeout(bgmTimeout);
       }
     });
 
     /* ==========================================
-       GESTIONE SCHERMATE DI GIOCO
+       SCHERMATE E TRANSIZIONI GUIDATE
        ========================================== */
+    let nextLevelTarget = '';
+
+    function showIntermediateScreen(nextScreenId, message) {
+      nextLevelTarget = nextScreenId;
+      document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+      const inter = document.getElementById('screen-intermediate');
+      if(message) document.getElementById('inter-text').textContent = message;
+      inter.classList.add('active');
+      window.scrollTo(0, 0);
+      playTone(659.25, 'triangle', 0.3, 0.25);
+    }
+
+    document.getElementById('btn-inter-next').addEventListener('click', () => {
+      if(nextLevelTarget) goToScreen(nextLevelTarget);
+    });
+
     function goToScreen(screenId) {
       document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
       const target = document.getElementById(screenId);
@@ -694,20 +748,20 @@
       initAudio();
       if(!isBgmPlaying) {
         isBgmPlaying = true;
-        audioToggleBtn.textContent = '🎵 BGM: ON';
+        audioToggleBtn.textContent = '🎵 THE KOLORS: ON';
         scheduleNextNote();
       }
       goToScreen('screen-lvl1');
     });
 
     /* ==========================================
-       LIVELLO 1: CATCH THE HEARTS (CANVAS)
+       LIVELLO 1: CATCH THE HEARTS & FLOWERS (VELOCE & ABBONDANTE)
        ========================================== */
     const canvas = document.getElementById('game-canvas');
     const ctx = canvas.getContext('2d');
     let basketX = 140;
-    const basketWidth = 60;
-    const basketHeight = 26;
+    const basketWidth = 65;
+    const basketHeight = 28;
     let scoreLvl1 = 0;
     let hearts = [];
     let lvl1Running = false;
@@ -730,13 +784,15 @@
       requestAnimationFrame(gameLoop1);
     }
 
+    const fallItems = ['🌸', '💖', '🌷', '✨', '🌺', '💕'];
     function spawnHeart() {
-      if(Math.random() < 0.035 && hearts.length < 5) {
+      // Spawn più frequente e contemporaneo
+      if(Math.random() < 0.08 && hearts.length < 8) {
         hearts.push({
-          x: Math.random() * (canvas.width - 24),
+          x: Math.random() * (canvas.width - 26),
           y: -20,
-          speed: 1.8 + Math.random() * 1.5,
-          char: Math.random() > 0.3 ? '💖' : '🌸'
+          speed: 2.8 + Math.random() * 2.2, // Più veloci e reattivi
+          char: fallItems[Math.floor(Math.random() * fallItems.length)]
         });
       }
     }
@@ -745,49 +801,50 @@
       if(!lvl1Running) return;
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      if(moveLeft && basketX > 0) basketX -= 5;
-      if(moveRight && basketX < canvas.width - basketWidth) basketX += 5;
+      if(moveLeft && basketX > 0) basketX -= 7;
+      if(moveRight && basketX < canvas.width - basketWidth) basketX += 7;
 
-      // Disegna cestino
+      // Disegna cestino pixel
       ctx.fillStyle = '#ff80ab';
       ctx.fillRect(basketX, canvas.height - basketHeight - 6, basketWidth, basketHeight);
       ctx.strokeStyle = '#880e4f';
       ctx.lineWidth = 3;
       ctx.strokeRect(basketX, canvas.height - basketHeight - 6, basketWidth, basketHeight);
-      ctx.font = '14px Silkscreen';
+      ctx.font = '16px Silkscreen';
       ctx.fillStyle = '#880e4f';
-      ctx.fillText('🧺', basketX + basketWidth/2 - 7, canvas.height - 12);
+      ctx.fillText('🧺', basketX + basketWidth/2 - 8, canvas.height - 10);
 
       spawnHeart();
 
       for(let i = hearts.length - 1; i >= 0; i--) {
         const h = hearts[i];
         h.y += h.speed;
-        ctx.font = '20px serif';
+        ctx.font = '22px serif';
         ctx.fillText(h.char, h.x, h.y);
 
-        // Collisione
-        if(h.y >= canvas.height - basketHeight - 12 && h.y <= canvas.height - 4 &&
-           h.x + 18 >= basketX && h.x <= basketX + basketWidth) {
+        // Cattura
+        if(h.y >= canvas.height - basketHeight - 14 && h.y <= canvas.height - 2 &&
+           h.x + 20 >= basketX && h.x <= basketX + basketWidth) {
           hearts.splice(i, 1);
           scoreLvl1++;
           document.getElementById('lvl1-score').textContent = scoreLvl1;
           playTone(587.33, 'square', 0.1, 0.2);
 
-          if(scoreLvl1 >= 7) {
+          if(scoreLvl1 >= 10) {
             lvl1Running = false;
             playTone(880, 'sine', 0.3, 0.25);
-            setTimeout(() => goToScreen('screen-lvl2'), 500);
+            setTimeout(() => {
+              showIntermediateScreen('screen-lvl2', 'Hai raccolto tutti i fiori e cuoricini al volo! Ora mettiamo alla prova il tuo ritmo e memoria!');
+            }, 300);
             return;
           }
-        } else if(h.y > canvas.height + 20) {
+        } else if(h.y > canvas.height + 25) {
           hearts.splice(i, 1);
         }
       }
       requestAnimationFrame(gameLoop1);
     }
 
-    // Controlli tastiera e touch
     window.addEventListener('keydown', e => {
       if(e.key === 'ArrowLeft') moveLeft = true;
       if(e.key === 'ArrowRight') moveRight = true;
@@ -817,7 +874,7 @@
     }, { passive: false });
 
     /* ==========================================
-       LIVELLO 2: SIMON SAYS FLOREALE
+       LIVELLO 2: SIMON SAYS DEI FIORI (5 ROUND)
        ========================================== */
     const simonFreqs = [329.63, 392.00, 440.00, 523.25];
     let simonSeq = [];
@@ -858,7 +915,7 @@
             turnLabel.style.color = '#2e7d32';
           }, 500);
         }
-      }, 700);
+      }, 650);
     }
 
     function lightSimonBtn(id) {
@@ -886,9 +943,11 @@
         }
 
         if(playerSeq.length === simonSeq.length) {
-          if(simonRound >= 3) {
+          if(simonRound >= 5) {
             playTone(880, 'sine', 0.3, 0.25);
-            setTimeout(() => goToScreen('screen-lvl3'), 600);
+            setTimeout(() => {
+              showIntermediateScreen('screen-lvl3', 'Memoria pazzesca! Hai completato tutti e 5 i round! Ora tocca al grande cruciverba!');
+            }, 500);
           } else {
             simonRound++;
             setTimeout(nextSimonRound, 800);
@@ -960,7 +1019,6 @@
       document.getElementById('cw-clue-display').textContent = item.clue;
 
       const input = document.getElementById('cw-text-input');
-      // Ricostruisci ciò che c'è attualmente nelle celle
       let currVal = '';
       const cells = targetRow.querySelectorAll('.cw-cell');
       cells.forEach(c => currVal += (c.textContent || ''));
@@ -979,7 +1037,6 @@
         cell.textContent = val[idx] || '';
       });
 
-      // Passa automaticamente alla riga successiva
       if(val.length >= cwData[currentCwRow].word.length && currentCwRow < cwData.length - 1) {
         selectCwRow(currentCwRow + 1);
       }
@@ -1012,7 +1069,9 @@
         msg.textContent = 'PERFETTO! SEI TU LA MIA VITA! 💖';
         msg.style.color = '#2e7d32';
         playTone(659.25, 'triangle', 0.4, 0.25);
-        setTimeout(() => goToScreen('screen-lvl4'), 1000);
+        setTimeout(() => {
+          showIntermediateScreen('screen-lvl4', 'Cruciverba svelato alla perfezione! Ora troviamo tutte le coppie gemelle nel Memory!');
+        }, 800);
       } else {
         msg.textContent = 'QUASI! Ricontrolla le risposte incomplete!';
         msg.style.color = '#c2185b';
@@ -1073,7 +1132,9 @@
           lockMem = false;
 
           if(matchedPairs === 6) {
-            setTimeout(() => goToScreen('screen-lvl5'), 700);
+            setTimeout(() => {
+              showIntermediateScreen('screen-lvl5', 'Sei un fenomeno! Tutte le coppie trovate! Ora l\'ultima prova di logica: il mini Sudoku!');
+            }, 600);
           }
         } else {
           setTimeout(() => {
@@ -1091,12 +1152,6 @@
     /* ==========================================
        LIVELLO 5: MINI SUDOKU 4x4
        ========================================== */
-    // Soluzione corretta completa:
-    // 🌸 💖 | 💋 🌼
-    // 💋 🌼 | 🌸 💖
-    // ------+------
-    // 💖 🌸 | 🌼 💋
-    // 🌼 💋 | 💖 🌸
     const sudokuSolution = [
       ['🌸', '💖', '💋', '🌼'],
       ['💋', '🌼', '🌸', '💖'],
@@ -1104,7 +1159,6 @@
       ['🌼', '💋', '💖', '🌸']
     ];
 
-    // Solo 4 caselle mancanti (una per quadrante) per renderlo divertente e immediato
     const sudokuInitial = [
       ['🌸', '',   '💋', '🌼'],
       ['💋', '🌼', '',   '💖'],
@@ -1175,7 +1229,9 @@
         msg.textContent = 'BRAVISSIMA! SUDOKU COMPLETATO! ✨';
         msg.style.color = '#2e7d32';
         playTone(880, 'triangle', 0.4, 0.25);
-        setTimeout(() => goToScreen('screen-lvl6'), 900);
+        setTimeout(() => {
+          showIntermediateScreen('screen-lvl6', 'Hai sbloccato l\'ultimissima fase finale! C\'è solo una domanda che ti aspetta...');
+        }, 800);
       } else {
         msg.textContent = 'C\'è qualche ripetizione! Riprova!';
         msg.style.color = '#c2185b';
@@ -1197,8 +1253,6 @@
 
     function startLevel6() {
       const btnNo = document.getElementById('btn-no');
-      const arena = document.getElementById('boss-arena');
-      // Posizione iniziale accanto a SÌ
       btnNo.style.position = 'relative';
       btnNo.style.left = '0px';
       btnNo.style.top = '0px';
